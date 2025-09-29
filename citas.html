@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citas Médicas - Mi Cuidado Rosa</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e91e63 0%, #ad1457 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .page-header h1 {
+            color: #e91e63;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #e91e63;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #f8bbd9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e91e63;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e91e63, #ad1457);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ad1457, #880e4f);
+            transform: translateY(-2px);
+        }
+
+        .appointment-item {
+            background: #fce4ec;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #e91e63;
+        }
+
+        .appointment-date {
+            font-weight: bold;
+            color: #ad1457;
+            margin-bottom: 0.5rem;
+        }
+
+        .appointment-details {
+            color: #666;
+        }
+
+        .clinic-info {
+            grid-column: 1 / -1;
+        }
+
+        .clinic-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .map-placeholder {
+            background: #f8bbd9;
+            height: 300px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ad1457;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .clinic-details {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-ribbon"></i>
+                Mi Cuidado Rosa
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="citas.html" class="active"><i class="fas fa-calendar-alt"></i> Citas</a></li>
+                    <li><a href="autoexamen.html"><i class="fas fa-hand-paper"></i> Autoexamen</a></li>
+                    <li><a href="medicamentos.html"><i class="fas fa-pills"></i> Medicamentos</a></li>
+                    <li><a href="index.html#tips"><i class="fas fa-lightbulb"></i> Consejos</a></li>
+                    <li><a href="index.html#chat"><i class="fas fa-comments"></i> Chat</a></li>
+                    <li><a href="index.html#podcasts"><i class="fas fa-podcast"></i> Podcasts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="page-header">
+            <h1><i class="fas fa-calendar-check"></i> Gestión de Citas Médicas</h1>
+            <p>Programa y gestiona tus citas médicas de manera fácil y organizada</p>
+        </section>
+
+        <div class="content-grid">
+            <div class="card">
+                <h2><i class="fas fa-plus"></i> Agendar Nueva Cita</h2>
+                <form id="appointmentForm">
+                    <div class="form-group">
+                        <label for="doctorName">Nombre del Médico/Especialista</label>
+                        <input type="text" id="doctorName" name="doctorName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specialty">Especialidad</label>
+                        <select id="specialty" name="specialty" required>
+                            <option value="">Seleccionar especialidad</option>
+                            <option value="oncologia">Oncología</option>
+                            <option value="mastologia">Mastología</option>
+                            <option value="ginecologia">Ginecología</option>
+                            <option value="radiologia">Radiología</option>
+                            <option value="cirugia">Cirugía</option>
+                            <option value="medicina-general">Medicina General</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointmentDate">Fecha de la Cita</label>
+                        <input type="date" id="appointmentDate" name="appointmentDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointmentTime">Hora de la Cita</label>
+                        <input type="time" id="appointmentTime" name="appointmentTime" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clinic">Clínica/Hospital</label>
+                        <input type="text" id="clinic" name="clinic" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Notas Adicionales</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Motivo de la consulta, preparación especial, etc."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Guardar Cita
+                    </button>
+                </form>
+            </div>
+
+            <div class="card" id="upcoming">
+                <h2><i class="fas fa-calendar-alt"></i> Próximas Citas</h2>
+                <div id="appointmentsList">
+                    <div class="appointment-item">
+                        <div class="appointment-date">
+                            <i class="fas fa-calendar"></i> 15 de Octubre, 2024 - 10:00 AM
+                        </div>
+                        <div class="appointment-details">
+                            <strong>Dr. María González - Oncología</strong><br>
+                            Hospital San Vicente Fundación<br>
+                            <small>Control de seguimiento</small>
+                        </div>
+                    </div>
+
+                    <div class="appointment-item">
+                        <div class="appointment-date">
+                            <i class="fas fa-calendar"></i> 22 de Octubre, 2024 - 2:30 PM
+                        </div>
+                        <div class="appointment-details">
+                            <strong>Dr. Carlos Ruiz - Mastología</strong><br>
+                            Clínica Las Américas<br>
+                            <small>Mamografía de control</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clinic-info">
+            <h2><i class="fas fa-hospital"></i> Información de Clínicas en Medellín</h2>
+            <div class="clinic-details">
+                <div>
+                    <h3>Clínicas Recomendadas</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1rem; padding: 1rem; background: #fce4ec; border-radius: 8px;">
+                            <strong>Hospital San Vicente Fundación</strong><br>
+                            <i class="fas fa-map-marker-alt"></i> Calle 64 #51D-154<br>
+                            <i class="fas fa-phone"></i> (604) 444 1333<br>
+                            <small>Especializado en oncología y mastología</small>
+                        </li>
+                        <li style="margin-bottom: 1rem; padding: 1rem; background: #fce4ec; border-radius: 8px;">
+                            <strong>Clínica Las Américas</strong><br>
+                            <i class="fas fa-map-marker-alt"></i> Diagonal 75B #2A-80/140<br>
+                            <i class="fas fa-phone"></i> (604) 342 1010<br>
+                            <small>Centro integral de cáncer</small>
+                        </li>
+                        <li style="margin-bottom: 1rem; padding: 1rem; background: #fce4ec; border-radius: 8px;">
+                            <strong>Clínica Medellín</strong><br>
+                            <i class="fas fa-map-marker-alt"></i> Carrera 51B #36-27<br>
+                            <i class="fas fa-phone"></i> (604) 250 8000<br>
+                            <small>Unidad de mastología y ginecología</small>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Ubicación en Medellín</h3>
+                    <div class="map-placeholder">
+                        <div style="text-align: center;">
+                            <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 1rem;"></i><br>
+                            Mapa de clínicas especializadas<br>
+                            <small>(Requiere integración con Google Maps)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const appointmentForm = document.getElementById('appointmentForm');
+            const appointmentsList = document.getElementById('appointmentsList');
+
+            // Establecer fecha mínima como hoy
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('appointmentDate').min = today;
+
+            appointmentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(appointmentForm);
+                const appointmentData = {
+                    doctorName: formData.get('doctorName'),
+                    specialty: formData.get('specialty'),
+                    date: formData.get('appointmentDate'),
+                    time: formData.get('appointmentTime'),
+                    clinic: formData.get('clinic'),
+                    notes: formData.get('notes')
+                };
+
+                // Crear elemento de cita
+                const appointmentItem = document.createElement('div');
+                appointmentItem.className = 'appointment-item';
+
+                const appointmentDate = new Date(appointmentData.date);
+                const formattedDate = appointmentDate.toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                appointmentItem.innerHTML = `
+                    <div class="appointment-date">
+                        <i class="fas fa-calendar"></i> ${formattedDate} - ${appointmentData.time}
+                    </div>
+                    <div class="appointment-details">
+                        <strong>${appointmentData.doctorName} - ${appointmentData.specialty}</strong><br>
+                        ${appointmentData.clinic}<br>
+                        <small>${appointmentData.notes || 'Sin notas adicionales'}</small>
+                    </div>
+                `;
+
+                // Agregar al inicio de la lista
+                appointmentsList.insertBefore(appointmentItem, appointmentsList.firstChild);
+
+                // Limpiar formulario
+                appointmentForm.reset();
+
+                // Mostrar mensaje de éxito
+                alert('¡Cita agendada exitosamente!');
+            });
+        });
+    </script>
+</body>
+</html>

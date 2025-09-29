@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoexamen - Mi Cuidado Rosa</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e91e63 0%, #ad1457 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .page-header h1 {
+            color: #e91e63;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card h2 {
+            color: #e91e63;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-bar {
+            background: #f8bbd9;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #e91e63, #ad1457);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .step {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .step-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .step-image {
+            background: #fce4ec;
+            height: 300px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ad1457;
+            font-size: 4rem;
+        }
+
+        .step-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e91e63, #ad1457);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ad1457, #880e4f);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f8bbd9;
+            color: #ad1457;
+        }
+
+        .btn-secondary:hover {
+            background: #f48fb1;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #f8bbd9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e91e63;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: #fce4ec;
+            border-radius: 8px;
+        }
+
+        .history-item {
+            background: #fce4ec;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #e91e63;
+        }
+
+        .history-date {
+            font-weight: bold;
+            color: #ad1457;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .step-content {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-ribbon"></i>
+                Mi Cuidado Rosa
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="citas.html"><i class="fas fa-calendar-alt"></i> Citas</a></li>
+                    <li><a href="autoexamen.html" class="active"><i class="fas fa-hand-paper"></i> Autoexamen</a></li>
+                    <li><a href="medicamentos.html"><i class="fas fa-pills"></i> Medicamentos</a></li>
+                    <li><a href="index.html#tips"><i class="fas fa-lightbulb"></i> Consejos</a></li>
+                    <li><a href="index.html#chat"><i class="fas fa-comments"></i> Chat</a></li>
+                    <li><a href="index.html#podcasts"><i class="fas fa-podcast"></i> Podcasts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="page-header">
+            <h1><i class="fas fa-hand-paper"></i> Guía de Autoexamen</h1>
+            <p>Aprende la técnica correcta del autoexamen mamario paso a paso</p>
+        </section>
+
+        <div class="card">
+            <h2><i class="fas fa-play-circle"></i> Guía Paso a Paso</h2>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div id="step1" class="step active">
+                <div class="step-content">
+                    <div class="step-text">
+                        <h3>Paso 1: Preparación</h3>
+                        <p><strong>Cuándo realizar el autoexamen:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li>Una vez al mes</li>
+                            <li>7-10 días después del inicio de la menstruación</li>
+                            <li>Si no menstrúas, elige un día fijo del mes</li>
+                            <li>Preferiblemente en la ducha o acostada</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Importante:</strong> Relájate y tómate tu tiempo. Es normal sentir diferentes texturas en el seno.</p>
+                    </div>
+                    <div class="step-image">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step2" class="step">
+                <div class="step-content">
+                    <div class="step-text">
+                        <h3>Paso 2: Inspección Visual</h3>
+                        <p><strong>Frente al espejo con los brazos a los lados:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li>Observa el tamaño, forma y color de los senos</li>
+                            <li>Busca cambios en la piel (hoyuelos, arrugas)</li>
+                            <li>Observa los pezones (retracción, secreción)</li>
+                            <li>Nota cualquier asimetría inusual</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Repite con los brazos levantados y las manos en las caderas.</strong></p>
+                    </div>
+                    <div class="step-image">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step3" class="step">
+                <div class="step-content">
+                    <div class="step-text">
+                        <h3>Paso 3: Palpación de Pie</h3>
+                        <p><strong>Con la mano derecha examina el seno izquierdo:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li>Usa las yemas de los dedos (no las puntas)</li>
+                            <li>Presiona con firmeza pero suavemente</li>
+                            <li>Realiza movimientos circulares pequeños</li>
+                            <li>Cubre todo el seno desde la clavícula hasta el abdomen</li>
+                            <li>Incluye la axila y el área entre el seno y la axila</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Repite con la mano izquierda en el seno derecho.</strong></p>
+                    </div>
+                    <div class="step-image">
+                        <i class="fas fa-hand-paper"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step4" class="step">
+                <div class="step-content">
+                    <div class="step-text">
+                        <h3>Paso 4: Palpación Acostada</h3>
+                        <p><strong>Acuéstate con una almohada bajo el hombro derecho:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li>Coloca el brazo derecho detrás de la cabeza</li>
+                            <li>Con la mano izquierda, examina el seno derecho</li>
+                            <li>Usa los mismos movimientos circulares</li>
+                            <li>Varía la presión: ligera, media y firme</li>
+                            <li>Examina desde el exterior hacia el pezón</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Repite del lado izquierdo.</strong></p>
+                    </div>
+                    <div class="step-image">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step5" class="step">
+                <div class="step-content">
+                    <div class="step-text">
+                        <h3>Paso 5: Examen del Pezón</h3>
+                        <p><strong>Examina cada pezón:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li>Presiona suavemente el pezón</li>
+                            <li>Observa si hay secreción</li>
+                            <li>Nota cualquier cambio en la forma</li>
+                            <li>Verifica si se retrae hacia adentro</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>¿Qué buscar?</strong> Bultos, engrosamientos, cambios en la textura, secreción inusual, cambios en el tamaño o forma.</p>
+                    </div>
+                    <div class="step-image">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-controls">
+                <button id="prevBtn" class="btn btn-secondary" onclick="changeStep(-1)" disabled>
+                    <i class="fas fa-arrow-left"></i> Anterior
+                </button>
+                <span id="stepIndicator">Paso 1 de 5</span>
+                <button id="nextBtn" class="btn btn-primary" onclick="changeStep(1)">
+                    Siguiente <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Registro de Hallazgos</h2>
+            <form id="examForm">
+                <div class="form-group">
+                    <label for="examDate">Fecha del Examen</label>
+                    <input type="date" id="examDate" name="examDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>¿Encontraste algún cambio o hallazgo?</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="noChanges" name="findings" value="no-changes">
+                            <label for="noChanges">Sin cambios</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="lump" name="findings" value="lump">
+                            <label for="lump">Bulto o masa</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="thickening" name="findings" value="thickening">
+                            <label for="thickening">Engrosamiento</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="discharge" name="findings" value="discharge">
+                            <label for="discharge">Secreción del pezón</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="skinChanges" name="findings" value="skin-changes">
+                            <label for="skinChanges">Cambios en la piel</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sizeChange" name="findings" value="size-change">
+                            <label for="sizeChange">Cambio de tamaño</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Ubicación del hallazgo (si aplica)</label>
+                    <select id="location" name="location">
+                        <option value="">Seleccionar ubicación</option>
+                        <option value="seno-derecho-superior">Seno derecho - Cuadrante superior</option>
+                        <option value="seno-derecho-inferior">Seno derecho - Cuadrante inferior</option>
+                        <option value="seno-izquierdo-superior">Seno izquierdo - Cuadrante superior</option>
+                        <option value="seno-izquierdo-inferior">Seno izquierdo - Cuadrante inferior</option>
+                        <option value="axila-derecha">Axila derecha</option>
+                        <option value="axila-izquierda">Axila izquierda</option>
+                        <option value="pezon-derecho">Pezón derecho</option>
+                        <option value="pezon-izquierdo">Pezón izquierdo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notas adicionales</label>
+                    <textarea id="notes" name="notes" rows="4" placeholder="Describe cualquier detalle adicional que consideres importante..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Guardar Registro
+                </button>
+            </form>
+        </div>
+
+        <div class="card" id="history">
+            <h2><i class="fas fa-history"></i> Historial de Exámenes</h2>
+            <div id="examHistory">
+                <div class="history-item">
+                    <div class="history-date">
+                        <i class="fas fa-calendar"></i> 15 de Septiembre, 2024
+                    </div>
+                    <div>
+                        <strong>Resultado:</strong> Sin cambios detectados<br>
+                        <small>Examen realizado correctamente siguiendo todos los pasos</small>
+                    </div>
+                </div>
+
+                <div class="history-item">
+                    <div class="history-date">
+                        <i class="fas fa-calendar"></i> 15 de Agosto, 2024
+                    </div>
+                    <div>
+                        <strong>Resultado:</strong> Sin cambios detectados<br>
+                        <small>Textura normal, sin bultos ni irregularidades</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        function updateProgress() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('stepIndicator').textContent = `Paso ${currentStep} de ${totalSteps}`;
+        }
+
+        function changeStep(direction) {
+            const currentStepElement = document.getElementById(`step${currentStep}`);
+            currentStepElement.classList.remove('active');
+
+            currentStep += direction;
+
+            if (currentStep < 1) currentStep = 1;
+            if (currentStep > totalSteps) currentStep = totalSteps;
+
+            const newStepElement = document.getElementById(`step${currentStep}`);
+            newStepElement.classList.add('active');
+
+            updateProgress();
+
+            // Actualizar botones
+            document.getElementById('prevBtn').disabled = currentStep === 1;
+            document.getElementById('nextBtn').disabled = currentStep === totalSteps;
+
+            if (currentStep === totalSteps) {
+                document.getElementById('nextBtn').innerHTML = '<i class="fas fa-check"></i> Completar';
+            } else {
+                document.getElementById('nextBtn').innerHTML = 'Siguiente <i class="fas fa-arrow-right"></i>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Establecer fecha de hoy por defecto
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('examDate').value = today;
+
+            // Manejar envío del formulario
+            document.getElementById('examForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(this);
+                const findings = Array.from(document.querySelectorAll('input[name="findings"]:checked'))
+                    .map(cb => cb.value);
+
+                const examData = {
+                    date: formData.get('examDate'),
+                    findings: findings,
+                    location: formData.get('location'),
+                    notes: formData.get('notes')
+                };
+
+                // Crear elemento de historial
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+
+                const examDate = new Date(examData.date);
+                const formattedDate = examDate.toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                const findingsText = findings.length > 0 ? findings.join(', ') : 'Sin cambios detectados';
+
+                historyItem.innerHTML = `
+                    <div class="history-date">
+                        <i class="fas fa-calendar"></i> ${formattedDate}
+                    </div>
+                    <div>
+                        <strong>Resultado:</strong> ${findingsText}<br>
+                        ${examData.location ? `<strong>Ubicación:</strong> ${examData.location}<br>` : ''}
+                        <small>${examData.notes || 'Sin notas adicionales'}</small>
+                    </div>
+                `;
+
+                // Agregar al inicio del historial
+                const historyContainer = document.getElementById('examHistory');
+                historyContainer.insertBefore(historyItem, historyContainer.firstChild);
+
+                // Limpiar formulario
+                this.reset();
+                document.getElementById('examDate').value = today;
+
+                // Mostrar mensaje de éxito
+                alert('¡Registro guardado exitosamente!');
+            });
+
+            // Manejar checkbox "Sin cambios" para desmarcar otros
+            document.getElementById('noChanges').addEventListener('change', function() {
+                if (this.checked) {
+                    const otherCheckboxes = document.querySelectorAll('input[name="findings"]:not(#noChanges)');
+                    otherCheckboxes.forEach(cb => cb.checked = false);
+                }
+            });
+
+            // Desmarcar "Sin cambios" si se selecciona otro hallazgo
+            const otherCheckboxes = document.querySelectorAll('input[name="findings"]:not(#noChanges)');
+            otherCheckboxes.forEach(cb => {
+                cb.addEventListener('change', function() {
+                    if (this.checked) {
+                        document.getElementById('noChanges').checked = false;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

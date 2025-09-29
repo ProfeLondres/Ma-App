@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consejos - Mi Cuidado Rosa</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e91e63 0%, #ad1457 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .page-header h1 {
+            color: #e91e63;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            background: white;
+            color: #ad1457;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .filter-tab.active {
+            background: linear-gradient(135deg, #e91e63, #ad1457);
+            color: white;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .tip-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .tip-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .prevention .tip-icon { background: linear-gradient(135deg, #4caf50, #388e3c); }
+        .nutrition .tip-icon { background: linear-gradient(135deg, #ff9800, #f57c00); }
+        .exercise .tip-icon { background: linear-gradient(135deg, #2196f3, #1976d2); }
+        .emotional .tip-icon { background: linear-gradient(135deg, #9c27b0, #7b1fa2); }
+        .treatment .tip-icon { background: linear-gradient(135deg, #e91e63, #ad1457); }
+
+        .tip-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .tip-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .tip-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #999;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 1rem;
+        }
+
+        .tip-rating {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .star {
+            color: #ffc107;
+        }
+
+        .search-box {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #f8bbd9;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #e91e63;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .filter-tabs {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-ribbon"></i>
+                Mi Cuidado Rosa
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="citas.html"><i class="fas fa-calendar-alt"></i> Citas</a></li>
+                    <li><a href="autoexamen.html"><i class="fas fa-hand-paper"></i> Autoexamen</a></li>
+                    <li><a href="medicamentos.html"><i class="fas fa-pills"></i> Medicamentos</a></li>
+                    <li><a href="consejos.html" class="active"><i class="fas fa-lightbulb"></i> Consejos</a></li>
+                    <li><a href="chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+                    <li><a href="podcasts.html"><i class="fas fa-podcast"></i> Podcasts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="page-header">
+            <h1><i class="fas fa-lightbulb"></i> Consejos de Cuidado</h1>
+            <p>Información valiosa para tu bienestar y cuidado integral</p>
+        </section>
+
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="Buscar consejos...">
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-category="all">Todos</button>
+            <button class="filter-tab" data-category="prevention">Prevención</button>
+            <button class="filter-tab" data-category="nutrition">Nutrición</button>
+            <button class="filter-tab" data-category="exercise">Ejercicio</button>
+            <button class="filter-tab" data-category="emotional">Bienestar Emocional</button>
+            <button class="filter-tab" data-category="treatment">Tratamiento</button>
+        </div>
+
+        <div class="tips-grid" id="tipsGrid">
+            <div class="tip-card prevention" data-category="prevention">
+                <div class="tip-header">
+                    <div class="tip-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Autoexamen Mensual</h3>
+                </div>
+                <p>Realiza el autoexamen mamario una vez al mes, preferiblemente 7-10 días después del inicio de tu menstruación. La detección temprana es clave para un tratamiento exitoso.</p>
+                <div class="tip-meta">
+                    <span><i class="fas fa-user-md"></i> Dr. María González</span>
+                    <div class="tip-rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-card nutrition" data-category="nutrition">
+                <div class="tip-header">
+                    <div class="tip-icon">
+                        <i class="fas fa-apple-alt"></i>
+                    </div>
+                    <h3>Alimentación Antioxidante</h3>
+                </div>
+                <p>Incluye alimentos ricos en antioxidantes como frutos rojos, vegetales de hoja verde, nueces y pescado. Estos ayudan a combatir los radicales libres y fortalecen tu sistema inmunológico.</p>
+                <div class="tip-meta">
+                    <span><i class="fas fa-user-md"></i> Lic. Ana Martínez</span>
+                    <div class="tip-rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-card exercise" data-category="exercise">
+                <div class="tip-header">
+                    <div class="tip-icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <h3>Ejercicio Regular</h3>
+                </div>
+                <p>Mantén una rutina de ejercicio de al menos 150 minutos semanales. El ejercicio regular reduce el riesgo de cáncer de mama y mejora la calidad de vida durante el tratamiento.</p>
+                <div class="tip-meta">
+                    <span><i class="fas fa-user-md"></i> Ft. Carlos Ruiz</span>
+                    <div class="tip-rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-card emotional" data-category="emotional">
+                <div class="tip-header">
+                    <div class="tip-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Apoyo Emocional</h3>
+                </div>
+                <p>No tengas miedo de buscar apoyo emocional. Habla con familiares, amigos o únete a grupos de apoyo. Tu bienestar mental es tan importante como tu salud física.</p>
+                <div class="tip-meta">
+                    <span><i class="fas fa-user-md"></i> Ps. Laura Jiménez</span>
+                    <div class="tip-rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-card treatment" data-category="treatment">
+                <div class="tip-header">
+                    <div class="tip-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3>Adherencia al Tratamiento</h3>
+                </div>
+                <p>Sigue estrictamente las indicaciones médicas y no suspendas el tratamiento sin consultar. Mantén un registro de tus medicamentos y efectos secundarios.</p>
+                <div class="tip-meta">
+                    <span><i class="fas fa-user-md"></i> Dr. Roberto Silva</span>
+                    <div class="tip-rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-card prevention" data-category="prevention">
+                <div class="tip-header">
+                    <div class="tip-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Controles Médicos</h3>
+                </div>
+                <p>Mantén tus citas médicas regulares y realiza los estudios recomendados (mamografía, ecografía). La prevención y detección temprana salvan vidas.</p>
+                <div class="tip-meta">
+                    <span><i class="fas fa-user-md"></i> Dr. Patricia López</span>
+                    <div class="tip-rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-card nutrition" data-category="nutrition">
+                <div class="tip-header">
+                    <div class="tip-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3>Hidratación Adecuada</h3>
+                </div>
+                <p>Mantén una hidratación adecuada bebiendo al menos 8 vasos de agua al día. Durante el tratamiento, la hidratación es especialmente importante para eliminar toxinas.</p>
+                <div class="tip-meta">
+                    <span><i class="fas fa-user-md"></i> Lic. Carmen Vega</span>
+                    <div class="tip-rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-card emotional" data-category="emotional">
+                <div class="tip-header">
+                    <div class="tip-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <h3>Descanso Reparador</h3>
+                </div>
+                <p>Prioriza un sueño de calidad de 7-8 horas diarias. El descanso adecuado fortalece tu sistema inmunológico y mejora tu capacidad de recuperación.</p>
+                <div class="tip-meta">
+                    <span><i class="fas fa-user-md"></i> Dr. Miguel Torres</span>
+                    <div class="tip-rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-card exercise" data-category="exercise">
+                <div class="tip-header">
+                    <div class="tip-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3>Yoga y Meditación</h3>
+                </div>
+                <p>Practica yoga suave y meditación para reducir el estrés y la ansiedad. Estas técnicas mejoran tu bienestar físico y emocional durante el tratamiento.</p>
+                <div class="tip-meta">
+                    <span><i class="fas fa-user-md"></i> Inst. Sofia Herrera</span>
+                    <div class="tip-rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            const tipCards = document.querySelectorAll('.tip-card');
+            const searchInput = document.getElementById('searchInput');
+
+            // Filtrar por categoría
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Actualizar tabs activos
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const category = this.dataset.category;
+
+                    // Mostrar/ocultar tarjetas
+                    tipCards.forEach(card => {
+                        if (category === 'all' || card.dataset.category === category) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 100);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // Búsqueda
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+
+                tipCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const content = card.querySelector('p').textContent.toLowerCase();
+
+                    if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+
+            // Animación de entrada
+            tipCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.3s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

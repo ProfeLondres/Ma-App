@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat con Especialistas - Mi Cuidado Rosa</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e91e63 0%, #ad1457 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .page-header h1 {
+            color: #e91e63;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        .chat-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            height: 600px;
+        }
+
+        .specialists-sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .specialists-sidebar h3 {
+            color: #e91e63;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .specialist-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 0.5rem;
+        }
+
+        .specialist-item:hover {
+            background: #fce4ec;
+        }
+
+        .specialist-item.active {
+            background: #f8bbd9;
+        }
+
+        .specialist-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e91e63, #ad1457);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .specialist-info h4 {
+            color: #333;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .specialist-info p {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4caf50;
+            margin-left: auto;
+        }
+
+        .chat-main {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chat-header .specialist-avatar {
+            width: 50px;
+            height: 50px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            max-width: 80%;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .message.specialist .message-avatar {
+            background: linear-gradient(135deg, #e91e63, #ad1457);
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+        }
+
+        .message-content {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .message.user .message-content {
+            background: #e3f2fd;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 0.5rem;
+        }
+
+        .chat-input {
+            padding: 1.5rem;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid #f8bbd9;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: #e91e63;
+        }
+
+        .send-btn {
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e91e63, #ad1457);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-style: italic;
+            padding: 0.5rem 1rem;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #e91e63;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .quick-questions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .quick-question {
+            background: #fce4ec;
+            color: #ad1457;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .quick-question:hover {
+            background: #f8bbd9;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .chat-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .specialists-sidebar {
+                order: 2;
+                height: 200px;
+            }
+
+            .chat-main {
+                order: 1;
+                height: 500px;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-ribbon"></i>
+                Mi Cuidado Rosa
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="citas.html"><i class="fas fa-calendar-alt"></i> Citas</a></li>
+                    <li><a href="autoexamen.html"><i class="fas fa-hand-paper"></i> Autoexamen</a></li>
+                    <li><a href="medicamentos.html"><i class="fas fa-pills"></i> Medicamentos</a></li>
+                    <li><a href="consejos.html"><i class="fas fa-lightbulb"></i> Consejos</a></li>
+                    <li><a href="chat.html" class="active"><i class="fas fa-comments"></i> Chat</a></li>
+                    <li><a href="podcasts.html"><i class="fas fa-podcast"></i> Podcasts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="page-header">
+            <h1><i class="fas fa-comments"></i> Chat con Especialistas</h1>
+            <p>Conecta con profesionales de la salud especializados en cáncer de mama</p>
+        </section>
+
+        <div class="chat-container">
+            <div class="specialists-sidebar">
+                <h3><i class="fas fa-user-md"></i> Especialistas</h3>
+
+                <div class="specialist-item active" data-specialist="maria">
+                    <div class="specialist-avatar">MG</div>
+                    <div class="specialist-info">
+                        <h4>Dra. María González</h4>
+                        <p>Oncóloga</p>
+                    </div>
+                    <div class="status-indicator"></div>
+                </div>
+
+                <div class="specialist-item" data-specialist="carlos">
+                    <div class="specialist-avatar">CR</div>
+                    <div class="specialist-info">
+                        <h4>Dr. Carlos Ruiz</h4>
+                        <p>Mastólogo</p>
+                    </div>
+                    <div class="status-indicator"></div>
+                </div>
+
+                <div class="specialist-item" data-specialist="ana">
+                    <div class="specialist-avatar">AM</div>
+                    <div class="specialist-info">
+                        <h4>Lic. Ana Martínez</h4>
+                        <p>Nutricionista</p>
+                    </div>
+                    <div class="status-indicator"></div>
+                </div>
+
+                <div class="specialist-item" data-specialist="laura">
+                    <div class="specialist-avatar">LJ</div>
+                    <div class="specialist-info">
+                        <h4>Ps. Laura Jiménez</h4>
+                        <p>Psicóloga</p>
+                    </div>
+                    <div class="status-indicator"></div>
+                </div>
+            </div>
+
+            <div class="chat-main">
+                <div class="chat-header">
+                    <div class="specialist-avatar">MG</div>
+                    <div>
+                        <h4 id="currentSpecialist">Dra. María González</h4>
+                        <p id="currentSpecialty">Oncóloga - En línea</p>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message specialist">
+                        <div class="message-avatar">MG</div>
+                        <div class="message-content">
+                            <p>¡Hola! Soy la Dra. María González, oncóloga especializada en cáncer de mama. Estoy aquí para resolver tus dudas y acompañarte en tu proceso. ¿En qué puedo ayudarte hoy?</p>
+                            <div class="message-time">10:30 AM</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-questions">
+                    <button class="quick-question" onclick="sendQuickQuestion('¿Cuáles son los síntomas del cáncer de mama?')">Síntomas</button>
+                    <button class="quick-question" onclick="sendQuickQuestion('¿Con qué frecuencia debo hacerme controles?')">Controles</button>
+                    <button class="quick-question" onclick="sendQuickQuestion('¿Qué debo hacer si encuentro un bulto?')">Bulto</button>
+                    <button class="quick-question" onclick="sendQuickQuestion('¿Cómo puedo reducir el riesgo?')">Prevención</button>
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator">
+                    <span>La doctora está escribiendo</span>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+
+                <div class="chat-input">
+                    <input type="text" id="messageInput" placeholder="Escribe tu mensaje...">
+                    <button class="send-btn" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const specialists = {
+            maria: {
+                name: "Dra. María González",
+                specialty: "Oncóloga - En línea",
+                avatar: "MG",
+                responses: [
+                    "Los síntomas más comunes incluyen: bultos en el seno o axila, cambios en el tamaño o forma del seno, secreción del pezón, y cambios en la piel. Es importante realizar autoexámenes mensuales.",
+                    "Te recomiendo controles anuales con mamografía a partir de los 40 años, o antes si tienes antecedentes familiares. El autoexamen debe ser mensual.",
+                    "Si encuentras un bulto, no entres en pánico. La mayoría son benignos, pero es importante que consultes con tu médico lo antes posible para una evaluación adecuada.",
+                    "Para reducir el riesgo: mantén un peso saludable, haz ejercicio regularmente, limita el alcohol, y considera la lactancia materna si es posible."
+                ]
+            },
+            carlos: {
+                name: "Dr. Carlos Ruiz",
+                specialty: "Mastólogo - En línea",
+                avatar: "CR",
+                responses: [
+                    "Como mastólogo, me especializo en el diagnóstico y tratamiento de enfermedades de la mama. Estoy aquí para ayudarte con cualquier inquietud sobre tu salud mamaria.",
+                    "La mamografía es el estudio más importante para la detección temprana. Te recomiendo realizarla anualmente después de los 40 años.",
+                    "El autoexamen debe realizarse una semana después de la menstruación. Te puedo guiar paso a paso si lo necesitas.",
+                    "Los estudios complementarios como ecografía o resonancia pueden ser necesarios según cada caso particular."
+                ]
+            },
+            ana: {
+                name: "Lic. Ana Martínez",
+                specialty: "Nutricionista - En línea",
+                avatar: "AM",
+                responses: [
+                    "Una alimentación balanceada es clave en la prevención y durante el tratamiento. Te recomiendo incluir muchas frutas, verduras, granos integrales y proteínas magras.",
+                    "Los antioxidantes son muy importantes: frutos rojos, vegetales de hoja verde, nueces y pescado rico en omega-3 deben estar en tu dieta diaria.",
+                    "Durante el tratamiento, es normal tener cambios en el apetito. Podemos trabajar juntas para mantener una buena nutrición adaptada a tus necesidades.",
+                    "Evita los alimentos procesados, el exceso de azúcar y las grasas trans. El alcohol debe consumirse con moderación o evitarse completamente."
+                ]
+            },
+            laura: {
+                name: "Ps. Laura Jiménez",
+                specialty: "Psicóloga - En línea",
+                avatar: "LJ",
+                responses: [
+                    "Es completamente normal sentir miedo, ansiedad o tristeza ante un diagnóstico de cáncer. Estoy aquí para acompañarte en este proceso emocional.",
+                    "El apoyo emocional es tan importante como el tratamiento médico. No dudes en expresar tus sentimientos y buscar ayuda cuando la necesites.",
+                    "Técnicas como la meditación, respiración profunda y mindfulness pueden ayudarte a manejar la ansiedad y el estrés durante el tratamiento.",
+                    "Mantener conexiones sociales y actividades que disfrutes es fundamental para tu bienestar emocional. No te aísles, busca apoyo en familia y amigos."
+                ]
+            }
+        };
+
+        let currentSpecialistKey = 'maria';
+        let messageCount = 0;
+
+        function switchSpecialist(specialistKey) {
+            currentSpecialistKey = specialistKey;
+            const specialist = specialists[specialistKey];
+
+            // Actualizar UI
+            document.getElementById('currentSpecialist').textContent = specialist.name;
+            document.getElementById('currentSpecialty').textContent = specialist.specialty;
+
+            // Actualizar sidebar
+            document.querySelectorAll('.specialist-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[data-specialist="${specialistKey}"]`).classList.add('active');
+
+            // Limpiar chat y mostrar mensaje de bienvenida
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="message specialist">
+                    <div class="message-avatar">${specialist.avatar}</div>
+                    <div class="message-content">
+                        <p>¡Hola! Soy ${specialist.name}. Estoy aquí para ayudarte con cualquier consulta relacionada con mi especialidad. ¿En qué puedo asistirte?</p>
+                        <div class="message-time">${getCurrentTime()}</div>
+                    </div>
+                </div>
+            `;
+            messageCount = 0;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+
+            if (message) {
+                addUserMessage(message);
+                input.value = '';
+
+                // Simular respuesta del especialista
+                setTimeout(() => {
+                    showTypingIndicator();
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        addSpecialistResponse();
+                    }, 2000);
+                }, 500);
+            }
+        }
+
+        function sendQuickQuestion(question) {
+            addUserMessage(question);
+
+            setTimeout(() => {
+                showTypingIndicator();
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    addSpecialistResponse();
+                }, 2000);
+            }, 500);
+        }
+
+        function addUserMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user';
+            messageDiv.innerHTML = `
+                <div class="message-avatar">TU</div>
+                <div class="message-content">
+                    <p>${message}</p>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function addSpecialistResponse() {
+            const specialist = specialists[currentSpecialistKey];
+            const responses = specialist.responses;
+            const response = responses[messageCount % responses.length];
+
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message specialist';
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${specialist.avatar}</div>
+                <div class="message-content">
+                    <p>${response}</p>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            messageCount++;
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'flex';
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Event listeners para cambiar especialista
+            document.querySelectorAll('.specialist-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const specialistKey = this.dataset.specialist;
+                    switchSpecialist(specialistKey);
+                });
+            });
+
+            // Enter para enviar mensaje
+            document.getElementById('messageInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

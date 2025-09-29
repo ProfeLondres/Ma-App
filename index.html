@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuidado Rosa - Cuidado del Cáncer de Mama</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e91e63 0%, #ad1457 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .welcome-section h1 {
+            color: #e91e63;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .welcome-section p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .appointments .card-icon { background: linear-gradient(135deg, #e91e63, #ad1457); }
+        .self-exam .card-icon { background: linear-gradient(135deg, #f06292, #e91e63); }
+        .medications .card-icon { background: linear-gradient(135deg, #ec407a, #c2185b); }
+
+        .card h3 {
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e91e63, #ad1457);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ad1457, #880e4f);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f8bbd9;
+            color: #ad1457;
+        }
+
+        .btn-secondary:hover {
+            background: #f48fb1;
+            transform: translateY(-2px);
+        }
+
+        .quick-access {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .quick-access h2 {
+            color: #e91e63;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #fce4ec;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #ad1457;
+            transition: all 0.3s;
+        }
+
+        .quick-link:hover {
+            background: #f8bbd9;
+            transform: translateX(5px);
+        }
+
+        .footer {
+            background: #ad1457;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .card-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-ribbon"></i>
+                Mi Cuidado Rosa
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="citas.html"><i class="fas fa-calendar-alt"></i> Citas</a></li>
+                    <li><a href="autoexamen.html"><i class="fas fa-hand-paper"></i> Autoexamen</a></li>
+                    <li><a href="medicamentos.html"><i class="fas fa-pills"></i> Medicamentos</a></li>
+                    <li><a href="consejos.html"><i class="fas fa-lightbulb"></i> Consejos</a></li>
+                    <li><a href="chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+                    <li><a href="podcasts.html"><i class="fas fa-podcast"></i> Podcasts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="welcome-section">
+            <h1><i class="fas fa-ribbon"></i> Bienvenida a Mi Cuidado Rosa</h1>
+            <p>Tu compañera digital en el cuidado y prevención del cáncer de mama. Aquí encontrarás herramientas, información y apoyo para tu bienestar.</p>
+        </section>
+
+        <section class="dashboard">
+            <div class="card appointments">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div>
+                        <h3>Citas Médicas</h3>
+                    </div>
+                </div>
+                <p>Gestiona tus citas médicas, consultas de seguimiento y encuentra información sobre clínicas especializadas.</p>
+                <div class="card-actions">
+                    <a href="citas.html" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Nueva Cita
+                    </a>
+                    <a href="citas.html#upcoming" class="btn btn-secondary">
+                        <i class="fas fa-list"></i> Ver Próximas
+                    </a>
+                </div>
+            </div>
+
+            <div class="card self-exam">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-hand-paper"></i>
+                    </div>
+                    <div>
+                        <h3>Autoexamen</h3>
+                    </div>
+                </div>
+                <p>Aprende la técnica correcta del autoexamen y registra tus hallazgos de manera segura y privada.</p>
+                <div class="card-actions">
+                    <a href="autoexamen.html" class="btn btn-primary">
+                        <i class="fas fa-play"></i> Comenzar Guía
+                    </a>
+                    <a href="autoexamen.html#history" class="btn btn-secondary">
+                        <i class="fas fa-history"></i> Ver Historial
+                    </a>
+                </div>
+            </div>
+
+            <div class="card medications">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div>
+                        <h3>Medicamentos</h3>
+                    </div>
+                </div>
+                <p>Mantén un registro de tus medicamentos, horarios y recibe recordatorios para no olvidar ninguna dosis.</p>
+                <div class="card-actions">
+                    <a href="medicamentos.html" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Agregar Medicamento
+                    </a>
+                    <a href="medicamentos.html#schedule" class="btn btn-secondary">
+                        <i class="fas fa-clock"></i> Ver Horarios
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-access">
+            <h2>Acceso Rápido</h2>
+            <div class="quick-links">
+                <a href="consejos.html" class="quick-link">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Consejos de Cuidado</span>
+                </a>
+                <a href="chat.html" class="quick-link">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat con Especialistas</span>
+                </a>
+                <a href="podcasts.html" class="quick-link">
+                    <i class="fas fa-podcast"></i>
+                    <span>Podcasts Educativos</span>
+                </a>
+                <a href="citas.html" class="quick-link">
+                    <i class="fas fa-phone"></i>
+                    <span>Contactos de Emergencia</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Mi Cuidado Rosa. Cuidando tu salud con amor y profesionalismo.</p>
+    </footer>
+
+    <script>
+        // Funcionalidad básica para navegación
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar efectos de hover a las tarjetas
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Navegación suave para enlaces internos
+            const internalLinks = document.querySelectorAll('a[href^="#"]');
+            internalLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Animación de entrada para las tarjetas
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                card.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

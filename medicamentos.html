@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicamentos - Mi Cuidado Rosa</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e91e63 0%, #ad1457 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .page-header h1 {
+            color: #e91e63;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #e91e63;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #f8bbd9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e91e63;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e91e63, #ad1457);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ad1457, #880e4f);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        .medication-item {
+            background: #fce4ec;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #e91e63;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .medication-info h4 {
+            color: #ad1457;
+            margin-bottom: 0.5rem;
+        }
+
+        .medication-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .day-card h4 {
+            color: #e91e63;
+            margin-bottom: 0.5rem;
+        }
+
+        .time-slot {
+            background: #fce4ec;
+            padding: 0.5rem;
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            color: #ad1457;
+        }
+
+        .today {
+            border: 2px solid #e91e63;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .schedule-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .medication-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-ribbon"></i>
+                Mi Cuidado Rosa
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="citas.html"><i class="fas fa-calendar-alt"></i> Citas</a></li>
+                    <li><a href="autoexamen.html"><i class="fas fa-hand-paper"></i> Autoexamen</a></li>
+                    <li><a href="medicamentos.html" class="active"><i class="fas fa-pills"></i> Medicamentos</a></li>
+                    <li><a href="index.html#tips"><i class="fas fa-lightbulb"></i> Consejos</a></li>
+                    <li><a href="index.html#chat"><i class="fas fa-comments"></i> Chat</a></li>
+                    <li><a href="index.html#podcasts"><i class="fas fa-podcast"></i> Podcasts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="page-header">
+            <h1><i class="fas fa-pills"></i> Control de Medicamentos</h1>
+            <p>Mantén un registro organizado de tus medicamentos y horarios</p>
+        </section>
+
+        <div class="content-grid">
+            <div class="card">
+                <h2><i class="fas fa-plus"></i> Agregar Medicamento</h2>
+                <form id="medicationForm">
+                    <div class="form-group">
+                        <label for="medicationName">Nombre del Medicamento</label>
+                        <input type="text" id="medicationName" name="medicationName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dosage">Dosis</label>
+                        <input type="text" id="dosage" name="dosage" placeholder="ej: 500mg, 1 tableta" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="frequency">Frecuencia</label>
+                        <select id="frequency" name="frequency" required>
+                            <option value="">Seleccionar frecuencia</option>
+                            <option value="1">Una vez al día</option>
+                            <option value="2">Dos veces al día</option>
+                            <option value="3">Tres veces al día</option>
+                            <option value="4">Cuatro veces al día</option>
+                            <option value="custom">Personalizado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="times">Horarios</label>
+                        <input type="text" id="times" name="times" placeholder="ej: 08:00, 14:00, 20:00" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startDate">Fecha de Inicio</label>
+                        <input type="date" id="startDate" name="startDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="duration">Duración (días)</label>
+                        <input type="number" id="duration" name="duration" min="1" placeholder="ej: 7, 30">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="instructions">Instrucciones Especiales</label>
+                        <textarea id="instructions" name="instructions" rows="3" placeholder="Con comida, en ayunas, etc."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Agregar Medicamento
+                    </button>
+                </form>
+            </div>
+
+            <div class="card" id="schedule">
+                <h2><i class="fas fa-clock"></i> Horario de Hoy</h2>
+                <div id="todaySchedule">
+                    <div class="medication-item">
+                        <div class="medication-info">
+                            <h4>Tamoxifeno 20mg</h4>
+                            <div class="medication-details">
+                                <i class="fas fa-clock"></i> 08:00 AM<br>
+                                <small>Con el desayuno</small>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="markAsTaken(this)">
+                            <i class="fas fa-check"></i> Tomado
+                        </button>
+                    </div>
+
+                    <div class="medication-item">
+                        <div class="medication-info">
+                            <h4>Calcio + Vitamina D</h4>
+                            <div class="medication-details">
+                                <i class="fas fa-clock"></i> 12:00 PM<br>
+                                <small>Con el almuerzo</small>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="markAsTaken(this)">
+                            <i class="fas fa-check"></i> Tomado
+                        </button>
+                    </div>
+
+                    <div class="medication-item">
+                        <div class="medication-info">
+                            <h4>Omeprazol 40mg</h4>
+                            <div class="medication-details">
+                                <i class="fas fa-clock"></i> 07:00 PM<br>
+                                <small>Antes de la cena</small>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="markAsTaken(this)">
+                            <i class="fas fa-check"></i> Tomado
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-list"></i> Mis Medicamentos</h2>
+            <div id="medicationsList">
+                <div class="medication-item">
+                    <div class="medication-info">
+                        <h4>Tamoxifeno 20mg</h4>
+                        <div class="medication-details">
+                            <strong>Dosis:</strong> 1 tableta<br>
+                            <strong>Frecuencia:</strong> Una vez al día (08:00)<br>
+                            <strong>Duración:</strong> Tratamiento continuo<br>
+                            <small>Con el desayuno</small>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger" onclick="removeMedication(this)">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
+                </div>
+
+                <div class="medication-item">
+                    <div class="medication-info">
+                        <h4>Calcio + Vitamina D</h4>
+                        <div class="medication-details">
+                            <strong>Dosis:</strong> 1 tableta<br>
+                            <strong>Frecuencia:</strong> Una vez al día (12:00)<br>
+                            <strong>Duración:</strong> Tratamiento continuo<br>
+                            <small>Con el almuerzo</small>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger" onclick="removeMedication(this)">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
+                </div>
+
+                <div class="medication-item">
+                    <div class="medication-info">
+                        <h4>Omeprazol 40mg</h4>
+                        <div class="medication-details">
+                            <strong>Dosis:</strong> 1 cápsula<br>
+                            <strong>Frecuencia:</strong> Una vez al día (19:00)<br>
+                            <strong>Duración:</strong> 30 días<br>
+                            <small>Antes de la cena</small>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger" onclick="removeMedication(this)">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card full-width">
+            <h2><i class="fas fa-calendar-week"></i> Calendario Semanal</h2>
+            <div class="schedule-grid">
+                <div class="day-card today">
+                    <h4>Lun</h4>
+                    <div class="time-slot">08:00 - Tamoxifeno</div>
+                    <div class="time-slot">12:00 - Calcio</div>
+                    <div class="time-slot">19:00 - Omeprazol</div>
+                </div>
+                <div class="day-card">
+                    <h4>Mar</h4>
+                    <div class="time-slot">08:00 - Tamoxifeno</div>
+                    <div class="time-slot">12:00 - Calcio</div>
+                    <div class="time-slot">19:00 - Omeprazol</div>
+                </div>
+                <div class="day-card">
+                    <h4>Mié</h4>
+                    <div class="time-slot">08:00 - Tamoxifeno</div>
+                    <div class="time-slot">12:00 - Calcio</div>
+                    <div class="time-slot">19:00 - Omeprazol</div>
+                </div>
+                <div class="day-card">
+                    <h4>Jue</h4>
+                    <div class="time-slot">08:00 - Tamoxifeno</div>
+                    <div class="time-slot">12:00 - Calcio</div>
+                    <div class="time-slot">19:00 - Omeprazol</div>
+                </div>
+                <div class="day-card">
+                    <h4>Vie</h4>
+                    <div class="time-slot">08:00 - Tamoxifeno</div>
+                    <div class="time-slot">12:00 - Calcio</div>
+                    <div class="time-slot">19:00 - Omeprazol</div>
+                </div>
+                <div class="day-card">
+                    <h4>Sáb</h4>
+                    <div class="time-slot">08:00 - Tamoxifeno</div>
+                    <div class="time-slot">12:00 - Calcio</div>
+                    <div class="time-slot">19:00 - Omeprazol</div>
+                </div>
+                <div class="day-card">
+                    <h4>Dom</h4>
+                    <div class="time-slot">08:00 - Tamoxifeno</div>
+                    <div class="time-slot">12:00 - Calcio</div>
+                    <div class="time-slot">19:00 - Omeprazol</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Establecer fecha de hoy por defecto
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').value = today;
+
+            // Manejar cambio de frecuencia
+            document.getElementById('frequency').addEventListener('change', function() {
+                const timesInput = document.getElementById('times');
+                const frequency = this.value;
+
+                switch(frequency) {
+                    case '1':
+                        timesInput.value = '08:00';
+                        break;
+                    case '2':
+                        timesInput.value = '08:00, 20:00';
+                        break;
+                    case '3':
+                        timesInput.value = '08:00, 14:00, 20:00';
+                        break;
+                    case '4':
+                        timesInput.value = '08:00, 12:00, 16:00, 20:00';
+                        break;
+                    default:
+                        timesInput.value = '';
+                }
+            });
+
+            // Manejar envío del formulario
+            document.getElementById('medicationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(this);
+                const medicationData = {
+                    name: formData.get('medicationName'),
+                    dosage: formData.get('dosage'),
+                    frequency: formData.get('frequency'),
+                    times: formData.get('times'),
+                    startDate: formData.get('startDate'),
+                    duration: formData.get('duration'),
+                    instructions: formData.get('instructions')
+                };
+
+                // Crear elemento de medicamento
+                const medicationItem = document.createElement('div');
+                medicationItem.className = 'medication-item';
+
+                const durationText = medicationData.duration ? 
+                    `${medicationData.duration} días` : 'Tratamiento continuo';
+
+                medicationItem.innerHTML = `
+                    <div class="medication-info">
+                        <h4>${medicationData.name}</h4>
+                        <div class="medication-details">
+                            <strong>Dosis:</strong> ${medicationData.dosage}<br>
+                            <strong>Frecuencia:</strong> ${getFrequencyText(medicationData.frequency)} (${medicationData.times})<br>
+                            <strong>Duración:</strong> ${durationText}<br>
+                            <small>${medicationData.instructions || 'Sin instrucciones especiales'}</small>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger" onclick="removeMedication(this)">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
+                `;
+
+                // Agregar a la lista
+                document.getElementById('medicationsList').appendChild(medicationItem);
+
+                // Limpiar formulario
+                this.reset();
+                document.getElementById('startDate').value = today;
+
+                // Mostrar mensaje de éxito
+                alert('¡Medicamento agregado exitosamente!');
+            });
+        });
+
+        function getFrequencyText(frequency) {
+            switch(frequency) {
+                case '1': return 'Una vez al día';
+                case '2': return 'Dos veces al día';
+                case '3': return 'Tres veces al día';
+                case '4': return 'Cuatro veces al día';
+                default: return 'Personalizado';
+            }
+        }
+
+        function markAsTaken(button) {
+            button.innerHTML = '<i class="fas fa-check-circle"></i> Tomado';
+            button.style.background = '#4caf50';
+            button.disabled = true;
+
+            // Agregar efecto visual
+            const medicationItem = button.closest('.medication-item');
+            medicationItem.style.opacity = '0.7';
+            medicationItem.style.background = '#e8f5e8';
+        }
+
+        function removeMedication(button) {
+            if (confirm('¿Estás segura de que quieres eliminar este medicamento?')) {
+                const medicationItem = button.closest('.medication-item');
+                medicationItem.remove();
+            }
+        }
+    </script>
+</body>
+</html>
