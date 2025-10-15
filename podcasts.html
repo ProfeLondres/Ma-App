@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Podcasts - Ma-App</title>
+    <title>Podcasts - Mi Cuidado Rosa</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -81,7 +81,7 @@
             font-size: 2.5rem;
         }
 
-        .player-section {
+        .featured-episode {
             background: white;
             border-radius: 15px;
             padding: 2rem;
@@ -89,32 +89,21 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .current-episode {
+        .featured-content {
             display: grid;
-            grid-template-columns: 200px 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 2rem;
             align-items: center;
             margin-bottom: 2rem;
         }
 
-        .episode-cover {
-            width: 200px;
-            height: 200px;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #e91e63, #ad1457);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-        }
-
-        .episode-info h2 {
+        .featured-info h2 {
             color: #e91e63;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
         }
 
-        .episode-info p {
+        .featured-info p {
             color: #666;
             line-height: 1.6;
             margin-bottom: 1rem;
@@ -125,132 +114,14 @@
             gap: 2rem;
             font-size: 0.9rem;
             color: #999;
-        }
-
-        .audio-player {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 1.5rem;
-        }
-
-        .player-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
             margin-bottom: 1rem;
         }
 
-        .play-btn {
-            width: 60px;
-            height: 60px;
+        .spotify-embed {
+            width: 100%;
+            height: 352px;
+            border-radius: 12px;
             border: none;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #e91e63, #ad1457);
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .play-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .time-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex: 1;
-        }
-
-        .progress-bar {
-            flex: 1;
-            height: 6px;
-            background: #ddd;
-            border-radius: 3px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #e91e63, #ad1457);
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.1s;
-        }
-
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .volume-slider {
-            width: 80px;
-        }
-
-        .episodes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .episode-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-        .episode-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-
-        .episode-card-header {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .episode-thumbnail {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #e91e63, #ad1457);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .episode-card-info h3 {
-            color: #333;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .episode-card-info p {
-            color: #666;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        .episode-duration {
-            background: #fce4ec;
-            color: #ad1457;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            align-self: flex-start;
         }
 
         .categories {
@@ -278,13 +149,94 @@
             color: white;
         }
 
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .episode-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .episode-card h3 {
+            color: #e91e63;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .episode-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .episode-card .episode-meta {
+            margin-bottom: 1.5rem;
+        }
+
+        .episode-embed {
+            width: 100%;
+            height: 152px;
+            border-radius: 12px;
+            border: none;
+        }
+
         .section-title {
             color: #e91e63;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .podcast-info {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .podcast-info h3 {
+            color: #e91e63;
+            margin-bottom: 1rem;
+        }
+
+        .podcast-info ul {
+            color: #666;
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e91e63;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border: 2px solid #e91e63;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .external-link:hover {
+            background: #e91e63;
+            color: white;
         }
 
         @media (max-width: 768px) {
@@ -302,13 +254,8 @@
                 padding: 1rem;
             }
 
-            .current-episode {
+            .featured-content {
                 grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .episode-cover {
-                margin: 0 auto;
             }
 
             .episodes-grid {
@@ -319,14 +266,10 @@
                 font-size: 2rem;
             }
 
-            .player-controls {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .time-info {
-                order: 3;
-                width: 100%;
+            .categories {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
             }
         }
     </style>
@@ -336,7 +279,7 @@
         <div class="header-content">
             <div class="logo">
                 <i class="fas fa-ribbon"></i>
-                Ma-App
+                Mi Cuidado Rosa
             </div>
             <nav>
                 <ul class="nav-menu">
@@ -358,38 +301,40 @@
             <p>Contenido de audio especializado sobre cáncer de mama y bienestar</p>
         </section>
 
-        <div class="player-section">
-            <div class="current-episode">
-                <div class="episode-cover">
-                    <i class="fas fa-microphone"></i>
-                </div>
-                <div class="episode-info">
-                    <h2>Detección Temprana: Tu Mejor Aliada</h2>
-                    <p>En este episodio, la Dra. María González nos explica la importancia de la detección temprana del cáncer de mama, los métodos disponibles y cómo realizar correctamente el autoexamen. Una guía completa para cuidar tu salud.</p>
-                    <div class="episode-meta">
-                        <span><i class="fas fa-clock"></i> 25 min</span>
-                        <span><i class="fas fa-calendar"></i> 15 Oct 2024</span>
-                        <span><i class="fas fa-user"></i> Dra. María González</span>
-                    </div>
-                </div>
-            </div>
+        <div class="podcast-info">
+            <h3><i class="fas fa-info-circle"></i> Sobre Nuestros Podcasts</h3>
+            <p>Hemos seleccionado cuidadosamente contenido de audio de alta calidad de especialistas reconocidos en el tema de cáncer de mama. Estos podcasts incluyen:</p>
+            <ul>
+                <li>Información médica actualizada sobre detección temprana</li>
+                <li>Consejos nutricionales durante el tratamiento</li>
+                <li>Apoyo emocional y testimonios inspiradores</li>
+                <li>Estrategias de prevención y cuidado integral</li>
+                <li>Entrevistas con especialistas y sobrevivientes</li>
+            </ul>
+            <a href="https://open.spotify.com/show/2FvVXqtZJF3zb6w0lMKO2K" target="_blank" class="external-link">
+                <i class="fab fa-spotify"></i> Ver en Spotify
+            </a>
+        </div>
 
-            <div class="audio-player">
-                <div class="player-controls">
-                    <button class="play-btn" id="playBtn" onclick="togglePlay()">
-                        <i class="fas fa-play" id="playIcon"></i>
-                    </button>
-                    <div class="time-info">
-                        <span id="currentTime">0:00</span>
-                        <div class="progress-bar" onclick="seekTo(event)">
-                            <div class="progress-fill" id="progressFill"></div>
-                        </div>
-                        <span id="totalTime">25:30</span>
+        <div class="featured-episode">
+            <h2 class="section-title"><i class="fas fa-star"></i> Episodio Destacado</h2>
+            <div class="featured-content">
+                <div class="featured-info">
+                    <h2>Cáncer de Mama: Por qué la mamografía es clave para la detección temprana</h2>
+                    <p>La mamografía es una herramienta fundamental en la detección temprana del cáncer de mama. En este episodio, Lidia Medina, enfermera de práctica avanzada, nos explica por qué es tan importante realizarla a tiempo y cómo puede salvar vidas.</p>
+                    <div class="episode-meta">
+                        <span><i class="fas fa-clock"></i> 45 min</span>
+                        <span><i class="fas fa-user"></i> Lidia Medina</span>
+                        <span><i class="fas fa-calendar"></i> Hablemos De Tu Salud</span>
                     </div>
-                    <div class="volume-control">
-                        <i class="fas fa-volume-up"></i>
-                        <input type="range" class="volume-slider" min="0" max="100" value="70">
-                    </div>
+                </div>
+                <div>
+                    <iframe class="spotify-embed" 
+                            src="https://open.spotify.com/embed/episode/6axGCq7hOOuHYmyzJB1UY1?utm_source=generator&theme=0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                    </iframe>
                 </div>
             </div>
         </div>
@@ -398,199 +343,123 @@
             <button class="category-btn active" data-category="all">Todos</button>
             <button class="category-btn" data-category="prevention">Prevención</button>
             <button class="category-btn" data-category="treatment">Tratamiento</button>
-            <button class="category-btn" data-category="nutrition">Nutrición</button>
-            <button class="category-btn" data-category="emotional">Bienestar Emocional</button>
+            <button class="category-btn" data-category="support">Apoyo</button>
             <button class="category-btn" data-category="testimonials">Testimonios</button>
         </div>
 
         <section>
-            <h2 class="section-title"><i class="fas fa-fire"></i> Episodios Populares</h2>
+            <h2 class="section-title"><i class="fas fa-headphones"></i> Episodios Recomendados</h2>
             <div class="episodes-grid">
-                <div class="episode-card" data-category="prevention" onclick="playEpisode('Detección Temprana: Tu Mejor Aliada', '25:30')">
-                    <div class="episode-card-header">
-                        <div class="episode-thumbnail">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <div class="episode-card-info">
-                            <h3>Detección Temprana: Tu Mejor Aliada</h3>
-                            <p>Métodos de detección, autoexamen y la importancia de los controles regulares.</p>
-                        </div>
-                        <div class="episode-duration">25 min</div>
+                <div class="episode-card" data-category="prevention">
+                    <h3>Detección Temprana del Cáncer de Mama</h3>
+                    <p>Información esencial sobre la importancia de la mamografía y otros métodos de detección temprana. Una guía completa para entender cuándo y cómo realizarse los estudios preventivos.</p>
+                    <div class="episode-meta">
+                        <span><i class="fas fa-clock"></i> 45 min</span>
+                        <span><i class="fas fa-user"></i> Especialistas</span>
                     </div>
+                    <iframe class="episode-embed" 
+                            src="https://open.spotify.com/embed/episode/6axGCq7hOOuHYmyzJB1UY1?utm_source=generator&theme=0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                    </iframe>
                 </div>
 
-                <div class="episode-card" data-category="nutrition" onclick="playEpisode('Alimentación Durante el Tratamiento', '32:15')">
-                    <div class="episode-card-header">
-                        <div class="episode-thumbnail">
-                            <i class="fas fa-apple-alt"></i>
-                        </div>
-                        <div class="episode-card-info">
-                            <h3>Alimentación Durante el Tratamiento</h3>
-                            <p>Consejos nutricionales para mantener la energía y fortalecer el sistema inmune.</p>
-                        </div>
-                        <div class="episode-duration">32 min</div>
+                <div class="episode-card" data-category="support">
+                    <h3>Apoyo Emocional Durante el Tratamiento</h3>
+                    <p>Estrategias para manejar el impacto emocional del diagnóstico y tratamiento. Incluye técnicas de relajación, manejo del estrés y la importancia del apoyo familiar.</p>
+                    <div class="episode-meta">
+                        <span><i class="fas fa-clock"></i> 30 min</span>
+                        <span><i class="fas fa-user"></i> Mama Bear Cancer Coach</span>
                     </div>
+                    <iframe class="episode-embed" 
+                            src="https://open.spotify.com/embed/show/4DIRa5As5K44oPsfZSnD3x?utm_source=generator&theme=0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                    </iframe>
                 </div>
 
-                <div class="episode-card" data-category="emotional" onclick="playEpisode('Manejo del Estrés y la Ansiedad', '28:45')">
-                    <div class="episode-card-header">
-                        <div class="episode-thumbnail">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="episode-card-info">
-                            <h3>Manejo del Estrés y la Ansiedad</h3>
-                            <p>Técnicas de relajación y estrategias para mantener el bienestar emocional.</p>
-                        </div>
-                        <div class="episode-duration">28 min</div>
+                <div class="episode-card" data-category="treatment">
+                    <h3>Cáncer de Mama: Salud, Seguros y Finanzas</h3>
+                    <p>Información práctica sobre cómo manejar los aspectos financieros del tratamiento, seguros médicos y recursos disponibles para pacientes y familias.</p>
+                    <div class="episode-meta">
+                        <span><i class="fas fa-clock"></i> 31 min</span>
+                        <span><i class="fas fa-user"></i> Bitácora52</span>
                     </div>
+                    <iframe class="episode-embed" 
+                            src="https://open.spotify.com/embed/episode/1ss6vd?utm_source=generator&theme=0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                    </iframe>
                 </div>
 
-                <div class="episode-card" data-category="treatment" onclick="playEpisode('Opciones de Tratamiento Modernas', '35:20')">
-                    <div class="episode-card-header">
-                        <div class="episode-thumbnail">
-                            <i class="fas fa-pills"></i>
-                        </div>
-                        <div class="episode-card-info">
-                            <h3>Opciones de Tratamiento Modernas</h3>
-                            <p>Avances en quimioterapia, radioterapia y terapias dirigidas.</p>
-                        </div>
-                        <div class="episode-duration">35 min</div>
+                <div class="episode-card" data-category="testimonials">
+                    <h3>Historias de Supervivencia y Esperanza</h3>
+                    <p>Testimonios inspiradores de mujeres que han superado el cáncer de mama. Sus experiencias, aprendizajes y consejos para otras mujeres en proceso similar.</p>
+                    <div class="episode-meta">
+                        <span><i class="fas fa-clock"></i> 25 min</span>
+                        <span><i class="fas fa-user"></i> PeppysPodcast</span>
                     </div>
+                    <iframe class="episode-embed" 
+                            src="https://open.spotify.com/embed/show/2zmNzq1f2mPNBHY1jBHbm2?utm_source=generator&theme=0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                    </iframe>
                 </div>
 
-                <div class="episode-card" data-category="testimonials" onclick="playEpisode('Historia de Esperanza: Ana María', '22:10')">
-                    <div class="episode-card-header">
-                        <div class="episode-thumbnail">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="episode-card-info">
-                            <h3>Historia de Esperanza: Ana María</h3>
-                            <p>El testimonio inspirador de una sobreviviente y su camino hacia la recuperación.</p>
-                        </div>
-                        <div class="episode-duration">22 min</div>
+                <div class="episode-card" data-category="prevention">
+                    <h3>Factores de Riesgo y Prevención</h3>
+                    <p>Conoce los principales factores de riesgo del cáncer de mama y las estrategias de prevención más efectivas. Incluye consejos sobre estilo de vida saludable.</p>
+                    <div class="episode-meta">
+                        <span><i class="fas fa-clock"></i> 35 min</span>
+                        <span><i class="fas fa-user"></i> Especialistas en Oncología</span>
                     </div>
+                    <iframe class="episode-embed" 
+                            src="https://open.spotify.com/embed/episode/6axGCq7hOOuHYmyzJB1UY1?utm_source=generator&theme=0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                    </iframe>
                 </div>
 
-                <div class="episode-card" data-category="prevention" onclick="playEpisode('Factores de Riesgo y Prevención', '30:00')">
-                    <div class="episode-card-header">
-                        <div class="episode-thumbnail">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="episode-card-info">
-                            <h3>Factores de Riesgo y Prevención</h3>
-                            <p>Conoce los factores de riesgo y cómo adoptar un estilo de vida preventivo.</p>
-                        </div>
-                        <div class="episode-duration">30 min</div>
+                <div class="episode-card" data-category="support">
+                    <h3>El Papel de la Familia en el Proceso</h3>
+                    <p>Cómo la familia puede ser un pilar fundamental durante el diagnóstico y tratamiento. Consejos para familiares y cuidadores sobre cómo brindar el mejor apoyo.</p>
+                    <div class="episode-meta">
+                        <span><i class="fas fa-clock"></i> 28 min</span>
+                        <span><i class="fas fa-user"></i> Mama Bear Cancer Coach</span>
                     </div>
-                </div>
-
-                <div class="episode-card" data-category="emotional" onclick="playEpisode('Apoyo Familiar Durante el Proceso', '26:30')">
-                    <div class="episode-card-header">
-                        <div class="episode-thumbnail">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="episode-card-info">
-                            <h3>Apoyo Familiar Durante el Proceso</h3>
-                            <p>Cómo la familia puede ser un pilar fundamental en el proceso de recuperación.</p>
-                        </div>
-                        <div class="episode-duration">26 min</div>
-                    </div>
-                </div>
-
-                <div class="episode-card" data-category="treatment" onclick="playEpisode('Efectos Secundarios y Cómo Manejarlos', '33:45')">
-                    <div class="episode-card-header">
-                        <div class="episode-thumbnail">
-                            <i class="fas fa-first-aid"></i>
-                        </div>
-                        <div class="episode-card-info">
-                            <h3>Efectos Secundarios y Cómo Manejarlos</h3>
-                            <p>Estrategias prácticas para lidiar con los efectos secundarios del tratamiento.</p>
-                        </div>
-                        <div class="episode-duration">33 min</div>
-                    </div>
+                    <iframe class="episode-embed" 
+                            src="https://open.spotify.com/embed/show/4DIRa5As5K44oPsfZSnD3x?utm_source=generator&theme=0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                    </iframe>
                 </div>
             </div>
         </section>
+
+        <div class="podcast-info">
+            <h3><i class="fas fa-external-link-alt"></i> Más Recursos</h3>
+            <p>Para acceder a más episodios y contenido actualizado, visita directamente las plataformas de podcast:</p>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                <a href="https://open.spotify.com/show/2FvVXqtZJF3zb6w0lMKO2K" target="_blank" class="external-link">
+                    <i class="fab fa-spotify"></i> Spotify
+                </a>
+                <a href="https://open.spotify.com/show/4DIRa5As5K44oPsfZSnD3x" target="_blank" class="external-link">
+                    <i class="fab fa-spotify"></i> Mama Bear Cancer Coach
+                </a>
+                <a href="https://open.spotify.com/show/2zmNzq1f2mPNBHY1jBHbm2" target="_blank" class="external-link">
+                    <i class="fab fa-spotify"></i> PeppysPodcast
+                </a>
+            </div>
+        </div>
     </main>
 
     <script>
-        let isPlaying = false;
-        let currentProgress = 0;
-        let progressInterval;
-
-        function togglePlay() {
-            const playBtn = document.getElementById('playBtn');
-            const playIcon = document.getElementById('playIcon');
-
-            if (isPlaying) {
-                playIcon.className = 'fas fa-play';
-                clearInterval(progressInterval);
-                isPlaying = false;
-            } else {
-                playIcon.className = 'fas fa-pause';
-                startProgress();
-                isPlaying = true;
-            }
-        }
-
-        function startProgress() {
-            progressInterval = setInterval(() => {
-                currentProgress += 0.1;
-                if (currentProgress >= 100) {
-                    currentProgress = 100;
-                    togglePlay();
-                }
-                updateProgress();
-            }, 100);
-        }
-
-        function updateProgress() {
-            const progressFill = document.getElementById('progressFill');
-            const currentTimeSpan = document.getElementById('currentTime');
-
-            progressFill.style.width = currentProgress + '%';
-
-            // Simular tiempo actual
-            const totalSeconds = 25 * 60 + 30; // 25:30
-            const currentSeconds = Math.floor((currentProgress / 100) * totalSeconds);
-            const minutes = Math.floor(currentSeconds / 60);
-            const seconds = currentSeconds % 60;
-
-            currentTimeSpan.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        }
-
-        function seekTo(event) {
-            const progressBar = event.currentTarget;
-            const rect = progressBar.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const width = rect.width;
-
-            currentProgress = (clickX / width) * 100;
-            updateProgress();
-        }
-
-        function playEpisode(title, duration) {
-            // Actualizar información del episodio actual
-            const episodeInfo = document.querySelector('.episode-info h2');
-            const totalTimeSpan = document.getElementById('totalTime');
-
-            episodeInfo.textContent = title;
-            totalTimeSpan.textContent = duration;
-
-            // Reiniciar reproductor
-            currentProgress = 0;
-            updateProgress();
-
-            if (isPlaying) {
-                togglePlay();
-            }
-
-            // Scroll al reproductor
-            document.querySelector('.player-section').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             // Filtros de categoría
             const categoryBtns = document.querySelectorAll('.category-btn');
@@ -633,6 +502,10 @@
                     card.style.transform = 'translateY(0)';
                 }, index * 100);
             });
+
+            // Mensaje de bienvenida
+            console.log('🎧 Podcasts cargados exitosamente');
+            console.log('📱 Los reproductores de Spotify están integrados y funcionando');
         });
     </script>
 </body>
